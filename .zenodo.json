@@ -21,5 +21,13 @@
     "Andronov-Hopf bifurcation",
     "prescribed frequency",
     "nonsmooth stabilisation"
+  ],
+  "related_identifiers": [
+    {
+      "identifier": "10.5281/zenodo.23847157",
+      "relation": "isSupplementedBy",
+      "scheme": "doi",
+      "resource_type": "publication-preprint"
+    }
   ]
 }
