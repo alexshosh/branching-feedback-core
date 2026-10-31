@@ -1,0 +1,689 @@
+%% Branching feedback at an uncontrollable linearisation -- short version (core)
+%% Full statements, proofs and further results: the companion preprint
+%% QualitativeFeedback-Accessible.tex (cited as \cite{Companion}).
+\documentclass[11pt,reqno]{amsart}
+
+\usepackage{amsmath,amssymb,amsthm,mathtools}
+\usepackage[margin=1.0in]{geometry}
+\usepackage{xcolor}
+\usepackage{tikz}
+\usetikzlibrary{decorations.markings,arrows.meta}
+\usepackage{cite}
+\usepackage[colorlinks=true,linkcolor=blue,citecolor=blue]{hyperref}
+
+\theoremstyle{plain}
+\newtheorem*{theorem}{Theorem}
+\newtheorem*{proposition}{Proposition}
+\newtheorem*{corollary}{Corollary}
+\theoremstyle{remark}
+\newtheorem*{remark}{Remark}
+\theoremstyle{definition}
+\newtheorem*{definition}{Definition}
+
+\DeclareMathOperator{\graph}{graph}
+\newcommand{\R}{\mathbb{R}}
+\newcommand{\C}{\mathbb{C}}
+\newcommand{\Sig}{\Sigma}
+
+\begin{document}
+
+\title[Branching feedback at an uncontrollable linearisation]
+{Branching feedback\\ at an uncontrollable linearisation\\ with applications to stabilisation,\\ the Brockett integrator, control of frequency\\ and Hopf bifurcation}
+
+\DeclareRobustCommand{\authoraffil}{{\normalfont\small Independent researcher}}
+\DeclareRobustCommand{\authoremail}{{\normalfont\small\texttt{alexshosh@aol.com}}}
+\DeclareRobustCommand{\authordate}{{\normalfont\small October 2026}}
+\author[Alex Shoshitaishvili]{Alex Shoshitaishvili\textsuperscript{*}\\ \authoraffil\\ \authoremail\\[4pt] \authordate}
+\thanks{\textsuperscript{*}Also published as A.\,N.~Shoshitaishvili.}
+
+\dedicatory{Dedicated, with deep gratitude, to the memory of Vladimir Arnold, Roger Brockett,\\ Mark Krasnosel'skii, Alexander Krasnosel'skii, Aleksei Pokrovskii, Aleksei Kleptsyn\\ and Nikolai Bobylev}
+
+\hypersetup{
+  pdftitle={Branching feedback at an uncontrollable linearisation with applications to stabilisation, the Brockett integrator, control of frequency and Hopf bifurcation},
+  pdfauthor={Alex Shoshitaishvili}
+}
+\date{}
+
+\begin{abstract}
+At a working point where the linearisation of a plant is uncontrollable, no smooth feedback solves the
+\emph{qualitative-behaviour control (QBC) problem}, that is, makes the closed loop reproduce a prescribed qualitative behaviour if its spectrum does not contain some uncontrollable eigenvalue. We show what can
+be done instead. The plant is coupled to a reference system by a coupling law depending on the states of both,
+and one looks for an invariant manifold $x=F(z)$ of the combined system. Uncontrollability forces $F$ to be singular
+at the working point. Over a state $x$ the reference state $z$ with $F(z)=x$ is then in general
+not unique, and the coupling law gives one value on each such $z$: a \emph{branching feedback}, whose branches are defined on regions of the state space glued together along strata of the caustic, which is the set of
+critical values of $F$, and possibly along other submanifolds chosen by design. The same reference and coupling serve a whole family of plants crossing the degeneracy, including the
+degenerate plant, which has no smooth stabiliser. This is the method of \cite{Shosh1990} (1990), restated in the language of geometric control. From \cite{Shosh1990} we recall asymptotic stabilisation and the synthesis of a stable Andronov--Hopf bifurcation at a corank-one degeneracy. New are: stabilisation of the model $\dot x=u^{n}$ for every $n\ge2$ with a rotating reference, and of its deformations; the nonholonomic (Brockett) integrator, with a closed-form synthesis with a rate independent of the initial point and, by rotating the branch, a continuous time-periodic stabiliser; and a cycle of \emph{prescribed frequency} when the critical pair $\pm i\omega_0$ is uncontrollable, where no smooth feedback can change $\omega_0$. This preprint is a short version; the proofs and further results are in the
+companion preprint \cite{Companion}.
+\end{abstract}
+
+\maketitle\enlargethispage{3pt}
+
+\section{Introduction}\label{sec:intro}
+
+Let a plant $\dot x=v(x,u)$ be given, with state $x$ in the state space $X$ and control $u$ in the control
+space $\mathcal U$; near the working point $x=0$, $u=0$,
+\begin{equation}\label{eq:plant}
+  \dot x = A x + C u + b(x,u), \qquad x\in\R^{N},\ u\in\R^{\ell},\quad b=o(x,u).
+\end{equation}
+Let also a \emph{reference system} $\dot z=w(z)$ be given on the reference state space $Z$; near $z=0$,
+$\dot z=Dz+d(z)$, $d=o(z)$.
+The \emph{qualitative-behaviour control (QBC) problem} introduced in \cite{Shosh1988,Shosh1990} asks for a feedback $u=s(x)$ making the closed loop
+$C^{k}$-conjugate to the reference. When $(A,C)$ is controllable, the linear problem is classical: it is solved by pole placement or by Rosenbrock's
+structural theorem, and the nonlinear problem reduces to the linear one \cite[Thm.~2.5]{Shosh1990}. This paper
+deals with the \emph{linearly uncontrollable} case.
+
+\medskip
+\noindent\textbf{The paper \cite{Shosh1990}.} The method comes from \cite{Shosh1988,Shosh1990}. It has
+two parts: control \cite[\S2--\S5]{Shosh1990} and observation \cite[\S6]{Shosh1990}. It is cited almost only for the second part: French researchers
+name it, together with later works, as the starting point of the Kazantzis--Kravaris/Luenberger (KKL) observer
+theory \cite{BrivadisAndrieuBernardSerres2023}; see also \cite{Andrieu2014} and the survey \cite{BernardAndrieuAstolfi2022}. The control part, which treats the QBC
+problem, is practically unknown, although the QBC problem contains stabilisation, the synthesis of bifurcations and
+the control of frequency as particular cases. The present preprint restates the control part, announced in \cite{Shosh1988} with applications in
+\cite{Shosh1991,Shosh1992}, in the language of geometric control, and extends it.
+
+\medskip
+\noindent\textbf{Where linear controllability is lost.}
+Engineering design prefers plants with controllable linearisation, but when a plant depends on parameters, the
+loss of linear controllability is inevitable as soon as the family of plants is transversal to a surface of
+degenerate linear controllability in the space of systems with control \cite{Shosh1990}. Examples from the
+literature: a quadrocopter that has lost propellers \cite{MuellerDAndrea2014,MuellerDAndrea2016}, a spacecraft
+with two control torques \cite{BrewerTsiotras2022}, a surface vessel without lateral thrust
+\cite{Reyhanoglu1997,PanPengLvTian2025}, a horizontal arm with a passive joint \cite{DeLucaMattoneOriolo2000},
+the unicycle \cite{dAndreaNovelCoronPerruquetti2020}, a Hopf bifurcation with uncontrollable critical modes
+\cite{AbedFu1986}. Loss of controllability of the linearisation also happens in practice in fluid control \cite{CoronLissy2014}, digital
+(sampled-data) control \cite{YangWangWang2024}, turbomachinery \cite{LiawAbed1996}, robotics \cite{Sampei2018}, networks \cite{JiangLai2019},
+quantum control \cite{Bournissou2023}, chemistry \cite{LeBalch2019} and biology \cite{CorneliusKathMotter2013}. The set of
+examples can be extended by feedback that stabilises a specific behaviour near a trajectory, that is, for the
+equations in variations (the author himself started his research in this area from stable following of a glide
+path in landing). All these examples are particular cases of one problem, the QBC problem, with different
+references.
+
+\medskip
+\noindent\textbf{The obstruction.}
+That no continuous static feedback can stabilise certain systems with uncontrollable linearisation is Brockett's
+necessary condition \cite{Brockett1983}; it remains necessary even when the feedback is discontinuous and the solutions are understood in
+Filippov's sense \cite{Ryan1994}, so researchers turned to
+other kinds of feedback: sampled feedback \cite{CLSS1997}, time-varying feedback and the
+return method \cite{Coron2007}, hybrid constructions \cite{GoebelSanfeliceTeel2012}; for recent accounts see
+\cite{KvalheimKoditschek2022,JongeneelMoulay2023}. The control-bifurcation programme \cite{KrenerKangChang2004}
+classifies systems with uncontrollable linearisation by smooth normal forms; the geometry of the feedback itself is not
+its subject.
+
+\medskip
+\noindent\textbf{What this paper adds.}
+We follow the method of \cite{Shosh1990}. The plant is coupled to a reference system by a coupling law $u=h(x,z)$
+that depends on the states of both, and one looks for an invariant manifold $x=F(z)$ of the combined system, the
+\emph{coupling manifold}. If an uncontrollable eigenvalue of the linearisation is not an eigenvalue of the reference,
+then for every coupling $F$ is singular at the working point \cite[Cor.~2.7]{Shosh1990}. Over a state $x$ the reference state $z$ with $F(z)=x$ is then in general
+not unique, and the coupling gives one control value on each such $z$: this is the
+\emph{branching feedback}. Its branches are defined on regions of $X$ glued together along strata of the \emph{caustic}, which is the set
+of critical values of $F$, and possibly along some other submanifolds of $X$ chosen by design. The new results are:
+\begin{enumerate}
+\item[(1)] \emph{Stabilisation across a loss of controllability} (\S\ref{sec:stab}): for $\dot x=u^{n}$, every
+  $n\ge2$, an $n$-branch feedback reproduces a rotating reference, the branch changing on a ray chosen by design; for
+  the versal deformation of $u^{n}$ the branch point splits into several branch points, and the same
+  reference and coupling solve the branching QBC problem for the whole family, including the degenerate plant, which has no continuous stabiliser. A high-Q
+  resonator driven electrostatically, without DC bias, at half or at a quarter of its resonance frequency is a plant
+  of this kind with $n=2$ or $n=4$.
+\item[(2)] \emph{The Brockett integrator} (\S\ref{sec:brockett}): the coupling manifold is a weighted blow-up and the
+  caustic is the $x_3$-axis; the branching feedback is in closed form, its magnitude is proportional to the size
+  $\nu$ of the state, and $\nu$ halves in a time that is the same for every initial point; keeping the horns invariant
+  gives a spiral of prescribed frequency, and rotating the branch gives a continuous time-periodic stabiliser.
+\item[(3)] \emph{Prescribed frequency at an uncontrollable critical pair $\pm i\omega_0$} (\S\ref{sec:frequency});
+  \cite[\S5]{Shosh1990} treats only controllable $(A,C)$. Smooth feedback cannot change $\omega_0$; a branching
+  feedback installs an attracting cycle of prescribed frequency, from a range explicitly decided by the coefficients of
+  the terms of \eqref{eq:plant} quadratic in $u$.
+\end{enumerate}
+All attracting cycles synthesised here have nonzero rotation about the origin; the self-intersection of the Hopf
+cycle of \cite{Shosh1990} can be removed with a jump to the other branch at the crossing.
+
+\medskip
+\noindent\textbf{On language.}
+We have deliberately dropped the original ``Ashby''
+terminology, which never found readers and collides with unrelated usages; the
+objects are renamed in the vocabulary of geometric control. However, the name of Ashby hinted at a connection
+between the stabilisation of equilibria by branching feedback and the notion of ultrastability, which Ashby
+developed in the framework of cybernetics \cite{Ashby1960}.
+
+\medskip
+\noindent\textbf{The two preprints.} The companion preprint \cite{Companion} contains all proofs, the details of the
+constructions, the frequency control for a plant of any dimension, a worked example, and a fuller discussion of the
+literature.
+
+\section{Coupling manifold and branching feedback}\label{sec:setup}
+
+\begin{definition}
+A \emph{coupling law}, or \emph{coupling}, of the plant and the reference is a germ $u=h(x,z)$ with $h(0,0)=0$. A \emph{coupling
+manifold} of $h$ is an integral manifold $M\subset X\times Z$ of the product system
+\[
+  \dot x=v\bigl(x,h(x,z)\bigr),\qquad \dot z=w(z),
+\]
+that is a graph over $Z$: $M=\graph(x=F(z))$, $F(0)=0$. The critical set of the projection
+$\pi\colon M\to X$, $\pi(x,z)=x$, is $\Sig=\{z:\det\partial_zF(z)=0\}$ (identifying $M$ with $Z$), and its image
+$\pi(\Sig)\subset X$ is the \emph{ramification locus}, or \emph{caustic}.
+\end{definition}
+
+\begin{theorem}[{\cite[Thm.~2.2]{Shosh1990}}]
+Let $v,w,h$ be of class $C^{k}$, $k\ge1$. The local problem of class $C^{k}$ is solvable iff some coupling has a
+coupling manifold $M=\graph(x=F(z))$ with $F$ a $C^{k}$-diffeomorphism. Then $s(x)=h\bigl(x,F^{-1}(x)\bigr)$ solves
+it, and $F$ conjugates the closed loop to the reference.
+\end{theorem}
+\begin{proof}
+Given a solving feedback $s$ and a conjugacy $F$, set $h(x,z)=s(x)$; then $\graph(x=F(z))$ is invariant.
+Conversely, if $F$ is a diffeomorphism, the closed loop under $s(x)=h(x,F^{-1}(x))$ is the push-forward of the
+reference by $F$, since $M$ is invariant.
+\end{proof}
+
+\begin{proposition}[the singularity is forced; {\cite[Cor.~2.7]{Shosh1990}}]
+If $\lambda$ is an uncontrollable eigenvalue of $A$ that is not an eigenvalue of $D$, then for every coupling the
+map $F$ is not a diffeomorphism at $0$. Hence the problem has no $C^{1}$ solution.
+\end{proposition}
+
+When $F$ is not a diffeomorphism, one asks instead for a branching feedback whose closed loop is the image of the
+reference under $F$: the \emph{branching QBC problem} (the modified problem of \cite[\S3]{Shosh1990}).
+
+\emph{The branching feedback (a sketch).} It consists of the values $u(x,j)=h\bigl(x,\zeta_j(x)\bigr)$ on the branches $j$ and a law of switching the branches, $j(t+0)=\alpha\bigl(x(t),j(t-0)\bigr)$; the branch number $j$ is a part of the state of the closed loop. Solutions following a branch are locally unique off $\Sig$ \cite[Prop.~3.1]{Shosh1990}.
+Near $\pi(\Sig)$ uniqueness fails, since the control $u=h\bigl(x,\zeta(x)\bigr)$ is not Lipschitz there, and a solution may run along the caustic instead of following the reference.
+This is avoided in one of two ways \cite[\S2.5]{Companion}. In \emph{branching closed/open-loop control}
+\cite[\S3]{Shosh1990}, near $\pi(\Sig)$ the feedback is replaced by the programmed control $u(t)=h\bigl(F(z(t)),z(t)\bigr)$ along the
+reference trajectory and is resumed on the branch reached; the control stays continuous in time, and each
+solution is the projection of one reference trajectory. When the trajectories of the reference on $M$ cross $\Sig$ transversally, the branch changes only finitely many times on each finite time interval, and a small measurement error cannot flip the branch. In \emph{branching feedback alone}, a small ball around
+each point of $\Sig$ where branches collide is cut out of $M$, and $M$ stays a branched covering after
+this surgery; on the boundary of each ball the state is switched to a branch over the same $x$ that does not take
+part in the collision; this assumes that such a branch exists (for $F(z)=z^{2}$ both sheets collide, and the
+closed/open-loop variant is used).
+
+The branch number in the state makes the law insensitive to small errors in measuring the state \cite{Shosh1990,Sontag1999}:
+the branch is not re-decided from the measured state at each instant, but changes only near the points of $\Sig$
+where branches collide. In this the branching feedback is close to hybrid controllers
+\cite{GoebelSanfeliceTeel2012,Sanfelice2021} and to a switch with hysteresis \cite{KrasnoselskiiPokrovskii1989,Visintin2014}. The simplest instance of branching: for $x=z^{3}-z$ three
+branches coexist over the interval $|x|<2/(3\sqrt3)$; a switch uses the two outer ones, and each of them ends at a fold,
+where the switch takes place. In engineering practice a thermostat or a
+relay has two branches, an automatic gearbox with $p$ gears has $p$ branches, since at the same speed it may be in either of two gears, depending on the gear it was in before, and staged heaters or compressors have one branch per stage. In all these cases memory prevents chattering.
+
+\section{Stabilisation}\label{sec:stab}
+
+\emph{A corank-one degeneracy.} Let $x\in\R^{2}$, $u$ scalar, and let the linearisation have corank one. By a
+linear change of variables and a feedback substitution the plant takes the normal form \cite[\S4.2]{Shosh1990}
+\begin{equation}\label{eq:normalform}
+  \dot x_1 = a x_1 + b_{20}x_2^{2} + b_{11}x_2u + b_{02}u^{2} + b_3(x_1,x_2,u),\qquad \dot x_2 = u,
+\end{equation}
+with $a>0$ and $b_3$ of higher order. Put $\Delta=a^{2}b_{02}^{2}+2a\,b_{02}b_{11}+4\,b_{02}b_{20}$.
+
+\begin{theorem}[{\cite[Thm.~4.2, Prop.~4.4]{Shosh1990}}]
+If $\Delta>0$, there are $c,\delta>0$ and initial values arbitrarily close to the origin whose trajectory leaves the
+$\delta$-neighbourhood for every control with $|u|\le c$, however discontinuous. If $\Delta<0$, there is an
+explicit coupling for which the projection of the coupling manifold is a tuck (or cusp) \cite{AGV,MondNuno2020}, with a reference whose solutions decay at any prescribed exponential rate, and the branching feedback stabilises the origin.
+\end{theorem}
+
+If $\Delta>0$, no control stabilises the origin, not even a discontinuous one. If $\Delta<0$, the origin can be
+stabilised, and more: for almost all plants \eqref{eq:normalform} with
+$a^{2}b_{02}^{2}+ab_{11}b_{02}+2b_{20}b_{02}<0$ (a condition that implies $\Delta<0$), a branching feedback depending on a
+parameter $\varepsilon$ reproduces the stable Andronov--Hopf bifurcation \cite[Thms.~4.5, 4.6]{Shosh1990}: for small $\varepsilon>0$ the closed loop has an asymptotically stable cycle of
+diameter of order $\sqrt\varepsilon$, with nonzero rotation about the origin (but with a self-intersection) and angular frequency $\omega$,
+\[
+  \omega^{2}=-\frac{ab_{11}+2b_{20}+a^{2}b_{02}}{2b_{02}} .
+\]
+The projection of the coupling manifold is a tuck. For almost all plants \eqref{eq:plant} with $x\in\R^{2}$, $\ell=2$
+and $(A,C)$ not controllable, any prescribed frequency can be reached \cite[Rem.~4.7]{Shosh1990}.
+
+\emph{The model $\dot x=u^{n}$.} Let $n\ge2$ and
+\begin{equation}\label{eq:model}
+  \dot x=u^{n},\qquad x,u\in\C ,
+\end{equation}
+whose linearisation vanishes identically in $u$. No continuous $u(x)$ with $u(0)=0$ makes the origin
+asymptotically stable: on a small circle the closed-loop field $u(x)^{n}$ has rotation $n$ times that of $u$,
+never $1$ \cite[Prop.~4.1]{Shosh1990}.
+
+\begin{theorem}
+In complex notation, $x=x_1+ix_2$, $u=u_1+iu_2$, take the reference $\dot z=\lambda z$, $\mathrm{Re}\,\lambda<0$, the
+coupling $u=z$ and the coupling manifold $x=F(z)=z^{n}/(n\lambda)$. Let $(n\lambda x)^{1/n}$ be a branch of the root
+continuous on the $x$-plane cut along a ray $x_2=kx_1$, $x_1>0$. Then the $n$-branch control
+\[
+  u(x,j)=\omega^{\,j}(n\lambda x)^{1/n},\qquad \omega=e^{2\pi i/n},\quad j=0,\dots,n-1,
+\]
+gives the closed loop $\dot x=n\lambda x$ on every branch. The ramification locus is $\pi(\Sig)=\{0\}$; when $x$
+crosses the ray $x_2=kx_1$, $x_1>0$, with $k$ chosen by the designer, the branch is switched by the law $j(t+0)=\alpha\bigl(x(t),j(t-0)\bigr)$ of Section~\ref{sec:setup}, where $\alpha(x,j)=j+\operatorname{sgn}(\operatorname{Im}\lambda)\bmod n$ on the ray and $\alpha(x,j)=j$ off it, and the control
+$u(t)=z(t)$ stays continuous.
+\end{theorem}
+
+For real $\lambda$ the trajectories are rays into $0$ and the branch never changes.
+
+For the versal deformation $\dot x=u^{n}+c_{n-1}u^{n-1}+\dots+c_1u$, $c_k\in\C$, for the same reference and coupling
+the branch point of order $n$ splits into the at most $n-1$ critical values of $F$, and the branches are permuted around them. The same reference
+and coupling thus serve the whole family across
+the degeneracy: the plant origin is stable when the branch is started at a lift $z_0$ of $x(0)$ of smallest modulus, since
+$|z_0|\le(n|\lambda||x(0)|)^{1/n}$ and $|z(t)|\le|z_0|$;
+from another lift the trajectory still tends to $0$ but may first move away. The splitting of the branch point holds also for deformations that contain $x$ \cite[\S3.3]{Companion}.
+
+\emph{An example: braking a resonator.} A high-Q resonator of natural frequency $\omega_0$, driven electrostatically
+without DC bias at $\omega_0/n$ \cite{MalufWilliams2004,KassieLeviElata2020}, has, along with the measured signal, a
+noise: its own oscillation at $\omega_0$. The slowly varying complex amplitude $a$ of this oscillation obeys
+$\dot a\approx-\gamma a+\kappa u^{n}$. To kill this noise quickly (from about
+$7000$ periods to about $18$ \cite[\S3.3]{Companion}), a branching feedback is required, with $n=2$ or $n=4$. Other physical deviations of the resonator add lower powers of $u$, which gives the versal deformation above; the
+same reference and coupling then still give a branching feedback that brakes the resonator.
+
+\section{The Brockett integrator}\label{sec:brockett}
+
+The nonholonomic integrator \cite{Brockett1983}, whose geometry is that of the Heisenberg group \cite{AgrachevBarilariBoscain2019},
+\begin{equation}\label{eq:brockett}
+  \dot x_1=u_1,\qquad \dot x_2=u_2,\qquad \dot x_3=x_1u_2-x_2u_1,
+\end{equation}
+fails Brockett's condition: no continuous $s(x)$ stabilises it. The unicycle is brought to this form by a feedback transformation \cite{SontagSurvey1999}, so the syntheses below apply to it. Write $r^{2}=x_1^{2}+x_2^{2}$, $x_1=r\cos\theta$,
+$x_2=r\sin\theta$; then $\dot x_3=r^{2}\dot\theta$, twice the areal velocity of the projected motion. The \emph{size}
+of the state is $\nu=(r^{4}+x_3^{2})^{1/4}$, homogeneous for the dilations
+$(x_1,x_2,x_3)\mapsto(\lambda x_1,\lambda x_2,\lambda^{2}x_3)$.
+
+\emph{The blow-up.} Blow-up is a standard tool near degenerate points \cite{JardonKuehn2021}, also in feedback design
+\cite{JardonScherpenPuerto2019}. The weighted blow-up $x_1=r\cos\theta$, $x_2=r\sin\theta$, $x_3=\rho r^{2}$, together with the
+chart $(r,\theta,x_3)$ near the axis, gives a manifold $Z$ and the blow-down $\beta\colon Z\to\R^{3}$. Over each point
+$(0,0,x_3)$, $x_3\ne0$, the fibre of $\beta$ is a circle $\{r=0,\ \theta\in S^{1}\}$, and over the origin it is a
+cylinder. The surfaces $H_\rho=\{x_3=\rho r^{2}\}$, paraboloids with common apex at the origin (the \emph{horns}),
+foliate $\R^{3}$ minus the axis; in the blow-up they are disjoint, and the cylinder indexes them. See Figure~\ref{fig:horns}.
+
+\begin{figure}[ht]\centering
+\begin{minipage}[b]{0.48\textwidth}\centering
+\scalebox{0.85}{\begin{tikzpicture}[x={(1cm,0cm)}, y={(0.50cm,0.38cm)}, z={(0cm,1cm)}, line cap=round]
+  \draw[->,gray!55] (-2.1,0,0)--(2.3,0,0) node[right]{\small$x_1$};
+  \draw[->,gray!55] (0,-2.1,0)--(0,2.3,0) node[right]{\small$x_2$};
+  \draw[->,gray!55] (0,0,-2.0)--(0,0,2.4) node[above]{\small$x_3$};
+  \foreach \r/\col in {1.5/blue!70!black, 0.6/blue!45!black, -0.6/teal!55!black, -1.5/teal!70!black}{
+    \draw[\col,thick,domain=-1.2:1.2,samples=50,variable=\t] plot ({\t},{0},{\r*\t*\t});
+    \draw[\col,thick,domain=-1.2:1.2,samples=50,variable=\t] plot ({0},{\t},{\r*\t*\t});
+    \draw[\col!55,densely dotted,domain=0:360,samples=60,variable=\a]
+         plot ({1.2*cos(\a)},{1.2*sin(\a)},{\r*1.44});
+  }
+  \draw[very thick,red!75!black] (0,0,-1.9)--(0,0,2.2);
+  \node[red!75!black,left] at (-0.42,0,-1.5) {\small$x_3$-axis};
+\end{tikzpicture}}\\[2pt]\small(a)
+\end{minipage}\hfill
+\begin{minipage}[b]{0.48\textwidth}\centering
+\scalebox{0.85}{\begin{tikzpicture}[line cap=round]
+  \def\rx{0.62}\def\ry{0.20}
+  \draw[gray!60] (-\rx,-2.1) -- (-\rx,2.1);
+  \draw[gray!60] ( \rx,-2.1) -- ( \rx,2.1);
+  \draw[red!75!black,very thick] (0,2.1) ellipse ({\rx} and {\ry});
+  \draw[red!75!black,very thick] (0,-2.1) ellipse ({\rx} and {\ry});
+  \node[red!75!black,left] at (-\rx-0.15,2.35) {\small$\rho=+\infty$};
+  \node[red!75!black,left] at (-\rx-0.15,-2.35) {\small$\rho=-\infty$};
+  \foreach \h/\col in {1.2/blue!70!black, 0.45/blue!45!black, -0.45/teal!55!black, -1.2/teal!70!black}{
+    \draw[\col,thick] (0,\h) ellipse ({\rx} and {\ry});
+    \draw[\col,thick] (\rx,\h) to[out=8,in=192] (2.5,\h+0.55*\h);
+    \draw[\col,thick] (\rx,\h-2*\ry) to[out=-8,in=200] (2.5,\h+0.55*\h-0.42);
+    \node[\col,right] at (2.55,\h+0.55*\h-0.2) {\small$H_{\rho}$};
+  }
+  \draw[gray!70,thick] (0,0) ellipse ({\rx} and {\ry});
+  \node[gray!70,left] at (-\rx-0.1,0) {\small$\rho=0$};
+  \node[below] at (0.9,-2.75) {\small the cylinder $(\theta,\rho)$};
+\end{tikzpicture}}\\[2pt]\small(b)
+\end{minipage}
+\caption{(a) The horns $H_\rho=\{x_3=\rho r^{2}\}$: paraboloids with a common apex at the origin, foliating $\R^{3}$ minus the $x_3$-axis (thick). (b) After the blow-up the origin becomes the cylinder with coordinates $(\theta,\rho)$, and each horn is attached along one circle $\rho=\mathrm{const}$. The synthesis drives $\rho$ from the two ends towards the circle $\rho=0$.}\label{fig:horns}
+\end{figure}
+
+\emph{The reference and the coupling.} With constants $b>2a>0$, $\eta>0$, $\rho_0>0$ the reference on $Z$ is the
+\emph{outward motion} $\dot r=\eta\nu$, $\dot\theta=0$, $\dot x_3=0$ on $|\rho|>\rho_0$, and the \emph{descent}
+\[
+  \dot\rho=-(b-2a)\rho,\qquad \dot\theta=-b\rho,\qquad \frac{\dot\nu}{\nu}=-\frac{a+\frac12 b\rho^{2}}{1+\rho^{2}}
+\]
+on $|\rho|\le\rho_0$. Near the axis moving outward is cheap and moving the height is expensive, so the state first
+moves away from the axis at constant height and only then descends. The coupling manifold is the graph of the
+blow-down, $M=\graph(x=\beta(z))$, so $\Sig$ is the exceptional set and the ramification locus is the $x_3$-axis. The branches are used only on
+the axis, where the outward motion starts: there the branch $\theta$ is the direction in which the state leaves
+the axis; in the descent $r>0$, and the feedback is single-valued.
+
+\begin{proposition}[the branching feedback; {\cite[\S4.2]{Companion}}]
+Let $\rho(x)=x_3/r^{2}$. The branching feedback is
+\[
+  u(x,\theta)=\begin{cases}
+    \eta\,\nu(x)\,(x_1,x_2)/r & \text{if } r>0,\ |x_3|>\rho_0r^{2},\\[0.5ex]
+    \eta\,|x_3|^{1/2}(\cos\theta,\sin\theta) & \text{if } r=0,\ x_3\neq0,\\[0.5ex]
+    -a\,(x_1,x_2)-b\,\rho(x)\,(-x_2,x_1) & \text{if } r>0,\ |x_3|\le\rho_0r^{2},\\[0.5ex]
+    0 & \text{if } x=0,
+  \end{cases}
+\]
+where the branch $\theta\in S^{1}$ is a point of the circle $\beta^{-1}(x)$ over an axis point. For every initial
+state and branch the closed loop has a unique lifted solution $x(t)=\beta(z(t))$, the projection of the
+reference trajectory from the chosen point of $\beta^{-1}(x(0))$. A solution that starts on the axis
+leaves it at once in the direction $\theta(0)$, and no solution reaches the axis later, so the branch is chosen
+once and never switched. With
+\[
+  c=\max\Bigl\{\eta,\ \max_{|\rho|\le\rho_0}\sqrt{a^{2}+b^{2}\rho^{2}}\,(1+\rho^{2})^{-1/4}\Bigr\},\qquad
+  C=(1+\rho_0^{-2})^{1/4},
+\]
+one has $|u(t)|\le c\,\nu(x(t))$ and, for $t\ge T_{\mathrm{out}}$,
+$\nu(x(t))\le C\nu(x(0))e^{-a(t-T_{\mathrm{out}})}$; here the time
+$T_{\mathrm{out}}=\eta^{-1}\int_0^{\rho_0^{-1/2}}(1+\xi^{4})^{-1/4}d\xi$ does not depend on $x(0)$. So
+$\nu(x(t))\le\nu(x(0))/2$ for all $t\ge T_{\mathrm{out}}+a^{-1}\ln(2C)$, a time that does not depend on $x(0)$.
+\end{proposition}
+
+Fixing one branch $\theta_0$ for all axis points gives a static law, discontinuous at every axis point, as Brockett's
+condition requires; the discontinuity is not seen along any solution. Zeng \cite{Zeng2022} found a time-invariant
+law whose discontinuities lie on the axis and whose solutions branch there; here the law is in closed form, and the
+axis is identified as the ramification locus, with the circle $\beta^{-1}(x)$ as the branches. For the homogeneity
+used here see \cite{Hermes1991,Kawski1990,MCloskeyMurray1997,Polyakov2020}; for other syntheses
+\cite{Astolfi1998,CanudasSordalen1992,BlochDrakunov1994,Zeng2019}, with oscillating inputs
+\cite{Zuyev2016,ZuyevGrushkovskaya2025}.
+
+\emph{A spiral of prescribed frequency.} If, after the outward motion, the law keeps the state on the horn
+$|\rho|=\rho_0$, with $|u|=c_*\nu$ on it \cite[\S4.3]{Companion}, the state spirals into the origin with the constant
+angular velocity
+\[
+  |\omega_*|=\frac{2c_*\,\rho_0\,(1+\rho_0^{2})^{1/4}}{\sqrt{1+4\rho_0^{2}}},
+\]
+which increases from $0$ to $\infty$ with $\rho_0$: the designer chooses the frequency through $\rho_0$.
+
+\emph{A rotating branch.} A time-dependent law is not subject to Brockett's condition. Let the branch used on the
+axis rotate, in opposite directions on the upper and lower half-axis, and merge the branches into one value inside
+a thin tube around the axis. With $\chi=\rho^{2}/(1+\rho^{2})$ put
+$A(\rho)=\eta\chi-a(1-\chi)(1+\rho^{2})^{-1/4}$, $B(\rho)=-b\rho(1-\chi)(1+\rho^{2})^{-1/2}$, $m=r/\nu=(1+\rho^{2})^{-1/4}$,
+and for $m_1\in(0,1)$, $\Omega>0$, a phase $\varphi_0$,
+\[
+  g(m)=3(m/m_1)^{2}-2(m/m_1)^{3}\ (m\le m_1),\qquad g(m)=1\ (m\ge m_1),
+\]
+\[
+  e_\pm(t)=\bigl(\cos(\mp\Omega t+\varphi_0),\,\sin(\mp\Omega t+\varphi_0)\bigr),
+\]
+\[
+  u(x,t)=\nu A(\rho)\Bigl[g(m)\frac{(x_1,x_2)}{r}+\bigl(1-g(m)\bigr)e_{\operatorname{sgn}x_3}(t)\Bigr]
+  +\nu(1+\rho^{2})^{1/4}B(\rho)\,\frac{(-x_2,x_1)}{r},\qquad u(0,t)=0 .
+\]
+On the axis $u=\eta\nu\,e_\pm(t)$: the branch used at time $t$ is $\theta=\mp\Omega t+\varphi_0$. The law is
+continuous, homogeneous of degree one, and $|u|\le(\eta+a+b)\nu$.
+
+\begin{theorem}[{\cite[\S4.4, App.~B]{Companion}}]
+For all $\eta,a>0$, $b>2a$, $m_1\in(0,1)$ and $\Omega>0$ the closed loop has unique solutions for all $t\ge t_0$,
+and there are $K,\gamma>0$, independent of $t_0$ and $x(t_0)$, with $\nu(x(t))\le Ke^{-\gamma(t-t_0)}\nu(x(t_0))$.
+The opposite rotation is necessary \cite[\S4.4]{Companion}.
+\end{theorem}
+
+This is a stabiliser of Coron's type \cite{Coron1992,Coron2007}: for a frozen time it is continuous and on the axis uses one
+branch of the branching feedback; the time dependence only moves this branch around the circle.
+
+\section{Control of frequency}\label{sec:frequency}
+
+Let the linearisation $(A,C)$ be uncontrollable at a critical pair $\pm i\omega_0$, $\omega_0>0$. Smooth feedback
+leaves $\pm i\omega_0$ in the closed-loop linearisation, so a Hopf cycle born from that pair has onset frequency
+$\omega_0$; in the bifurcation-control setting \cite{AbedFu1986,HamziKangBarbot2004} feedback changes criticality,
+stability and amplitude, but not this frequency. We install by feedback an attracting cycle on which the critical
+component turns at a prescribed angular velocity.
+
+By the Kalman decomposition the state splits into the linearly uncontrollable part $x_<\in\C$ and a controllable complement $x_>$:
+\[
+  \dot x_<=i\omega_0 x_<+Q(u,x),\qquad \dot x_>=A_> x_>+A_{><}x_<+C_> u+R(u,x),
+\]
+with $Q,R$ of order $\ge2$. We assume (H1) the uncontrollable subspace is two-dimensional and the
+quadratic-in-$u$ part of $Q$ is not zero, (H2) $(A_>,C_>)$ is controllable and $\dim\ker C_>=2$. On $\ker C_>\cong\C$
+the quadratic part is
+\[
+  Q(u)=G\,u^{2}+H\,|u|^{2}+K\,\bar u^{2},\qquad G,H,K\in\C ,
+\]
+and the \emph{plane system} is $\dot x=i\omega_0x+Q(u)$. For the reference we take the Andronov--Hopf system
+\[
+  \dot z=(\varepsilon+i\omega)z-|z|^{2}z,\qquad \varepsilon>0,
+\]
+whose attracting cycle $|z|^{2}=\varepsilon$ turns at frequency $\omega$, and the coupling manifold $x_<=z^{2}$ (or $\bar z^{2}$), as for $u^{n}$ with $n=2$ in Section~\ref{sec:stab}.
+
+\emph{The ellipse.} The position of $H$ relative to the ellipse
+\[
+  E(G,K)=\bigl\{\vartheta\in\C:\ |\vartheta|^{2}+|\vartheta^{2}-4GK|=2(|G|^{2}+|K|^{2})\bigr\},
+\]
+with foci $\pm2\sqrt{GK}$ and semi-axes $|G|+|K|$ and $\bigl||G|-|K|\bigr|$, decides what a branching feedback can do.
+$H$ is strictly inside $E(G,K)$ exactly when the Jacobian
+$J(u)=4\bigl[(|G|^{2}-|K|^{2})|u|^{2}+\mathrm{Re}((G\bar H-H\bar K)u^{2})\bigr]$ of $Q$ is strictly positive everywhere or
+strictly negative everywhere on $u\ne0$. Then $Q$ has no critical points off $0$, it is
+a double covering of $\C\setminus\{0\}$, and the coupling can be solved for pointwise.
+
+\begin{theorem}[$H$ strictly inside the ellipse; {\cite[\S5.3]{Companion}}]
+Assume a plant of class $C^{\max(k,3)}$, \textup{(H1)}, \textup{(H2)}, $H$ strictly inside $E(G,K)$,
+$2\omega\ne\omega_0$, and fix a gain $L$ with $A_>+C_>L$ Hurwitz. For small $\varepsilon>0$ and a suitable constant $K_0>0$, on the set $|x_<|\le2\varepsilon$, $|x_>|\le K_0|x_<|$:
+the equation
+\[
+  Q(p)+T(p,x)=\bigl[2(\varepsilon-|x_<|)+i\delta\bigr]x_<,\qquad T(p,x)=Q(Lx_>+p,x)-Q(p),\quad \delta=2\omega-\omega_0,
+\]
+has exactly two small solutions $p_0(x),p_1(x)\in\ker C_>$, of class $C^{k}$ off $x_<=0$ and exchanged by going once around it;
+the branching feedback $u(x,j)=Lx_>+p_j(x)$ makes $x_<$ obey
+\[
+  \dot x_<=\bigl[2(\varepsilon-|x_<|)+2i\omega\bigr]x_< ,
+\]
+($-2i\omega$ for $x_<=\bar z^{2}$), so $x_<$ traverses the asymptotically stable circle $|x_<|=\varepsilon$ at angular velocity $2\omega$, with period
+$\pi/\omega$; the control, $x_>$ and the reference have period $2\pi/\omega$.
+\end{theorem}
+
+The realised control $u(t)$ is smooth in time.
+
+On and outside the ellipse $J$ vanishes on some line through $0$, so $Q$ has critical points off $0$:
+folds in general, degenerate ones in special cases (for $G=K=1$, $H=2$, $Q(u)=4(\mathrm{Re}\,u)^{2}$ and $J\equiv0$). There the coupling $u=Lx_>+bz+b'\bar z+(cz+c'\bar z)x_<$ is used
+\cite[\S5.4--\S5.5]{Companion}; its last term, $(cz+c'\bar z)x_<$, acts as friction. Without this term the coupling
+does not suffice: then no coupling manifold extends over the reference cycle, and the state ends up winding on a torus near the cycle instead of on the
+cycle; the deviation is exponentially small in $1/\varepsilon$ and invisible at every finite order \cite[\S5.1]{Companion}. With the friction term, every frequency that passes an explicit
+second-order test is realised. Write $\Pi=|H^{2}-4GK|$ and
+\[
+  U=\frac12\sqrt{\frac{|H|^{2}+3\,\Pi-2\bigl(|G|^{2}+|K|^{2}\bigr)}{|H|^{2}+\Pi-2\bigl(|G|^{2}+|K|^{2}\bigr)}} .
+\]
+
+\begin{corollary}[{\cite[\S5.5]{Companion}}]
+Let $\omega_0>0$ and $|G|\ne|K|$. The angular velocity $2\omega$ or $-2\omega$ of $x_<$ (rotation $+2$ or $-2$ of the cycle about the origin)
+is realised on an attracting cycle as follows.
+\begin{enumerate}
+\item[(a)] $H$ strictly inside the ellipse: every $\omega>0$ for the cycle of rotation $-2$, and every $\omega$ with
+  $\omega/\omega_0\ne\frac12$ for the cycle of rotation $+2$, for the plant of any dimension.
+\item[(b)] $H$ on the ellipse: every $\omega$ with $\omega/\omega_0\notin\{\frac14,\frac13,\frac12,1,2\}$, for the cycle of rotation $+2$
+  \textup{(}for the plane system only $\frac14,\frac12$ are excluded\textup{)}.
+\item[(c)] $H$ strictly outside the ellipse: every $\omega$ with $\omega/\omega_0<U$, for the cycle of rotation $+2$, with the same
+  exclusions as in \textup{(b)}. Here $U\ge1/\sqrt2$, and $U\to\infty$ as $H$ approaches the ellipse.
+\end{enumerate}
+\end{corollary}
+
+The case $|G|=|K|$, where the ellipse degenerates to a segment, is treated separately in \cite[\S5.2]{Companion}.
+
+\section{Relation to other work}\label{sec:relation}
+
+\emph{Optimal control.} The construction parallels optimal control. There the state is doubled by the adjoint
+variable, the extremals sweep out a Lagrangian manifold, and the optimal feedback is read off it through the
+projection to the state space, branching over its caustic \cite{AGV}. Here the state is doubled by the reference
+state, the coupling manifold takes the place of the Lagrangian manifold, and the ramification locus that of the
+caustic. No cost functional is needed: the singularity is forced by the controllability degeneracy.
+
+\emph{An uncontrollable first approximation.} Korobov and Bebiya \cite{KorobovBebiya2017} stabilise systems
+uncontrollable in the first approximation by Korobov's controllability function; Zaslavsky
+\cite{Zaslavsky1996} treats coupled oscillators, and Qian, Lin and coauthors use sampled-data and linear feedback
+\cite{QianDuLi2016,YuLin2024}. These works use an ordinary single-valued feedback and aim at stabilising the
+equilibrium; a branching feedback stabilises the whole family of plants, including the degenerate one (ultrastability \cite{Ashby1960}), and can also
+impose other behaviour, such as a cycle of chosen frequency.
+
+\medskip
+\noindent\textbf{Acknowledgments.} The author used the AI assistants Claude (Anthropic) and ChatGPT (OpenAI) for help in this work.
+
+{\small
+\begin{thebibliography}{99}
+\bibitem{Companion} A.~Shoshitaishvili,
+  \emph{Qualitative-behaviour control with uncontrollable linearisation: branching feedback and the geometry of
+  its singularity locus}, preprint, 2026 (full version of the present paper).
+\bibitem{Shosh1988} A.\,N.~Shoshitaishvili,
+  \emph{Control of the qualitative behaviour of dynamical systems}
+  \textup{(Russian)}, Uspekhi Mat.\ Nauk \textbf{43}:4 (1988), 180.
+\bibitem{Shosh1990} A.\,N.~Shoshitaishvili,
+  \emph{Singularities for projections of integral manifolds with applications to
+  control and observation problems}, in \emph{Theory of Singularities and its
+  Applications} (V.\,I.~Arnold, ed.), Adv.\ Soviet Math.\ \textbf{1}, AMS, 1990, 295--333.
+\bibitem{BrivadisAndrieuBernardSerres2023} L.~Brivadis, V.~Andrieu, P.~Bernard, U.~Serres,
+  \emph{Further remarks on KKL observers}, Systems Control Lett.\ \textbf{172} (2023), 105429,
+  doi:10.1016/j.sysconle.2022.105429.
+\bibitem{Andrieu2014} V.~Andrieu,
+  \emph{Convergence speed of nonlinear Luenberger observers},
+  SIAM J.\ Control Optim.\ \textbf{52} (2014), 2831--2856.
+\bibitem{BernardAndrieuAstolfi2022} P.~Bernard, V.~Andrieu, D.~Astolfi,
+  \emph{Observer design for continuous-time dynamical systems}, Annu.\ Rev.\ Control \textbf{53} (2022),
+  224--248, doi:10.1016/j.arcontrol.2021.11.002.
+\bibitem{Shosh1991} A.\,N.~Shoshitaishvili,
+  \emph{Control of the structure of nonlinear systems} \textup{(Russian)},
+  Avtomat.\ i Telemekh.\ \textbf{8} (1991), 71--79.
+\bibitem{Shosh1992} A.\,N.~Shoshitaishvili,
+  \emph{On control branchings in systems with degenerate linearization},
+  in \emph{Proc.\ 2nd IFAC Symposium on Nonlinear Control Systems Design (NOLCOS'92)}, Bordeaux,
+  24--26 June 1992, 495--500.
+\bibitem{MuellerDAndrea2014} M.\,W.~Mueller, R.~D'Andrea,
+  \emph{Stability and control of a quadrocopter despite the complete loss of one, two, or three
+  propellers}, 2014 IEEE International Conference on Robotics and Automation (ICRA), 45--52,
+  doi:10.1109/ICRA.2014.6906588.
+\bibitem{MuellerDAndrea2016} M.\,W.~Mueller, R.~D'Andrea,
+  \emph{Relaxed hover solutions for multicopters: application to algorithmic redundancy and novel
+  vehicles}, Int.\ J.\ Robotics Res.\ \textbf{35} (2016), 873--889.
+\bibitem{BrewerTsiotras2022} J.~Brewer, P.~Tsiotras,
+  \emph{Exponential stabilization of the complete attitude of an underactuated spacecraft},
+  2022 American Control Conference (ACC), 1139--1144, doi:10.23919/ACC53348.2022.9867346.
+\bibitem{Reyhanoglu1997} M.~Reyhanoglu,
+  \emph{Exponential stabilization of an underactuated autonomous surface vessel},
+  Automatica \textbf{33} (1997), 2249--2254.
+\bibitem{PanPengLvTian2025} Q.~Pan, X.~Peng, Y.~Lv, Y.~Tian,
+  \emph{Global exponential stabilization of underactuated surface vessel with high-order fully actuated
+  control approach}, Asian J.\ Control \textbf{28} (2026), 1924--1933, doi:10.1002/asjc.3782.
+\bibitem{DeLucaMattoneOriolo2000} A.~De~Luca, R.~Mattone, G.~Oriolo,
+  \emph{Stabilization of an underactuated planar 2R manipulator},
+  Internat.\ J.\ Robust Nonlinear Control \textbf{10} (2000), 181--198.
+\bibitem{dAndreaNovelCoronPerruquetti2020} B.~d'Andr\'ea-Novel, J.-M.~Coron, W.~Perruquetti,
+  \emph{Small-time stabilization of homogeneous cascaded systems with application to the unicycle
+  and the slider examples}, SIAM J.\ Control Optim.\ \textbf{58} (2020), 2997--3018.
+\bibitem{AbedFu1986} E.\,H.~Abed, J.-H.~Fu,
+  \emph{Local feedback stabilization and bifurcation control, I. Hopf
+  bifurcation}, Systems Control Lett.\ \textbf{7} (1986), 11--17, doi:10.1016/0167-6911(86)90095-2.
+\bibitem{CoronLissy2014} J.-M.~Coron, P.~Lissy,
+  \emph{Local null controllability of the three-dimensional Navier--Stokes system with a distributed control
+  having two vanishing components}, Invent.\ Math.\ \textbf{198} (2014), 833--880, doi:10.1007/s00222-014-0512-5.
+\bibitem{YangWangWang2024} Z.~Yang, X.~Wang, L.~Wang,
+  \emph{Controllability of networked sampled-data systems}, IEEE Trans.\ Automat.\ Control \textbf{69} (2024),
+  5081--5093, doi:10.1109/TAC.2023.3344692.
+\bibitem{LiawAbed1996} D.-C.~Liaw, E.\,H.~Abed,
+  \emph{Active control of compressor stall inception: a bifurcation-theoretic approach}, Automatica \textbf{32}
+  (1996), 109--115, doi:10.1016/0005-1098(95)00096-8.
+\bibitem{Sampei2018} M.~Sampei,
+  \emph{Under-actuated systems: nonlinear control showcase}, in \emph{AETA 2017 -- Recent Advances in Electrical
+  Engineering and Related Sciences}, Lect.\ Notes Electr.\ Eng., Springer, 2018, 3--14,
+  doi:10.1007/978-3-319-69814-4\_1.
+\bibitem{JiangLai2019} J.~Jiang, Y.-C.~Lai,
+  \emph{Irrelevance of linear controllability to nonlinear dynamical networks}, Nat.\ Commun.\ \textbf{10} (2019),
+  3961, doi:10.1038/s41467-019-11822-5.
+\bibitem{Bournissou2023} M.~Bournissou,
+  \emph{Quadratic behaviors of the 1D linear Schr\"odinger equation with bilinear control}, J.\ Differential
+  Equations \textbf{351} (2023), 324--360, doi:10.1016/j.jde.2023.01.007.
+\bibitem{LeBalch2019} K.~Le~Balc'h,
+  \emph{Controllability of a $4\times4$ quadratic reaction--diffusion system}, J.\ Differential Equations
+  \textbf{266} (2019), 3100--3188, doi:10.1016/j.jde.2018.08.046.
+\bibitem{CorneliusKathMotter2013} S.\,P.~Cornelius, W.\,L.~Kath, A.\,E.~Motter,
+  \emph{Realistic control of network dynamics}, Nat.\ Commun.\ \textbf{4} (2013), 1942, doi:10.1038/ncomms2939.
+\bibitem{Brockett1983} R.\,W.~Brockett,
+  \emph{Asymptotic stability and feedback stabilization}, in
+  \emph{Differential Geometric Control Theory}, Birkh\"auser, 1983, 181--191.
+\bibitem{Ryan1994} E.\,P.~Ryan,
+  \emph{On Brockett's condition for smooth stabilizability and its necessity in a context of
+  nonsmooth feedback}, SIAM J.\ Control Optim.\ \textbf{32} (1994), 1597--1604.
+\bibitem{CLSS1997} F.\,H.~Clarke, Yu.\,S.~Ledyaev, E.\,D.~Sontag, A.\,I.~Subbotin,
+  \emph{Asymptotic controllability implies feedback stabilization},
+  IEEE Trans.\ Automat.\ Control \textbf{42} (1997), 1394--1407.
+\bibitem{Coron2007} J.-M.~Coron,
+  \emph{Control and Nonlinearity}, Math.\ Surveys Monogr.\ \textbf{136}, AMS, 2007.
+\bibitem{GoebelSanfeliceTeel2012} R.~Goebel, R.\,G.~Sanfelice, A.\,R.~Teel,
+  \emph{Hybrid Dynamical Systems: Modeling, Stability, and Robustness}, Princeton University Press, 2012.
+\bibitem{KvalheimKoditschek2022} M.\,D.~Kvalheim, D.\,E.~Koditschek,
+  \emph{Necessary conditions for feedback stabilization and safety}, J.\ Geom.\ Mech.\ \textbf{14} (2022),
+  659--693, doi:10.3934/jgm.2022013.
+\bibitem{JongeneelMoulay2023} W.~Jongeneel, E.~Moulay,
+  \emph{Topological Obstructions to Stability and Stabilization: History, Recent Advances and Open Problems},
+  SpringerBriefs Electr.\ Comput.\ Eng., Springer, 2023, doi:10.1007/978-3-031-30133-9.
+\bibitem{KrenerKangChang2004} A.\,J.~Krener, W.~Kang, D.\,E.~Chang,
+  \emph{Control bifurcations},
+  IEEE Trans.\ Automat.\ Control \textbf{49} (2004), 1231--1246.
+\bibitem{Ashby1960} W.\,R.~Ashby,
+  \emph{Design for a Brain: The Origin of Adaptive Behaviour}, 2nd ed., Chapman \& Hall, London, 1960,
+  doi:10.1037/11592-000.
+\bibitem{Sontag1999} E.\,D.~Sontag,
+  \emph{Clocks and insensitivity to small measurement errors}, ESAIM Control Optim.\ Calc.\ Var.\
+  \textbf{4} (1999), 537--557, doi:10.1051/cocv:1999121.
+\bibitem{Sanfelice2021} R.\,G.~Sanfelice,
+  \emph{Hybrid Feedback Control}, Princeton University Press, Princeton, NJ, 2021.
+\bibitem{KrasnoselskiiPokrovskii1989} M.\,A.~Krasnosel'ski\u{\i}, A.\,V.~Pokrovski\u{\i},
+  \emph{Systems with Hysteresis}, Springer, Berlin, 1989.
+\bibitem{Visintin2014} A.~Visintin, \emph{Ten issues about hysteresis}, Acta Appl.\ Math.\
+  \textbf{132} (2014), 635--647.
+\bibitem{AGV} V.\,I.~Arnold, S.\,M.~Gusein-Zade, A.\,N.~Varchenko,
+  \emph{Singularities of Differentiable Maps, Vol.~I}, Modern Birkh\"auser Classics,
+  Birkh\"auser, Boston, 2012 (reprint of the 1985 edition), doi:10.1007/978-0-8176-8340-5.
+\bibitem{MondNuno2020} D.~Mond, J.\,J.~Nu\~no-Ballesteros,
+  \emph{Singularities of Mappings}, Grundlehren Math.\ Wiss., Springer, 2020,
+  doi:10.1007/978-3-030-34440-5.
+\bibitem{MalufWilliams2004} N.~Maluf, K.~Williams,
+  \emph{An Introduction to Microelectromechanical Systems Engineering}, 2nd ed., Artech House, Boston, 2004.
+\bibitem{KassieLeviElata2020} Y.~Kassie, Y.~Levi, D.~Elata,
+  \emph{A double-sided comb-drive actuator with a floating rotor: achieving a strong response while eliminating the
+  DC bias}, J.\ Microelectromech.\ Syst.\ \textbf{29} (2020), 1173--1179, doi:10.1109/JMEMS.2020.3004831.
+\bibitem{AgrachevBarilariBoscain2019} A.~Agrachev, D.~Barilari, U.~Boscain,
+  \emph{A Comprehensive Introduction to Sub-Riemannian Geometry},
+  Cambridge University Press, 2019, doi:10.1017/9781108677325.
+\bibitem{SontagSurvey1999} E.\,D.~Sontag,
+  \emph{Stability and stabilization: discontinuities and the effect of disturbances}, in \emph{Nonlinear Analysis,
+  Differential Equations and Control} (F.\,H.~Clarke, R.\,J.~Stern, eds.), Kluwer, 1999, 551--598,
+  doi:10.1007/978-94-011-4560-2\_10.
+\bibitem{JardonKuehn2021} H.~Jard\'on-Kojakhmetov, C.~Kuehn,
+  \emph{A survey on the blow-up method for fast-slow systems}, in \emph{Mexican Mathematicians in the World},
+  Contemp.\ Math.\ \textbf{775}, AMS, 2021, 115--160, doi:10.1090/conm/775/15591.
+\bibitem{JardonScherpenPuerto2019} H.~Jard\'on-Kojakhmetov, J.\,M.\,A.~Scherpen, D.~del~Puerto-Flores,
+  \emph{Stabilization of a class of slow--fast control systems at non-hyperbolic points},
+  Automatica \textbf{99} (2019), 13--21.
+\bibitem{Zeng2022} S.~Zeng,
+  \emph{On the geometric construction of a stabilizing time-invariant state feedback controller
+  for the nonholonomic integrator}, Automatica \textbf{136} (2022), 110073.
+\bibitem{Hermes1991} H.~Hermes,
+  \emph{Nilpotent and high-order approximations of vector field systems},
+  SIAM Rev.\ \textbf{33} (1991), 238--264.
+\bibitem{Kawski1990} M.~Kawski,
+  \emph{Homogeneous stabilizing feedback laws},
+  Control Theory Adv.\ Tech.\ \textbf{6} (1990), 497--516.
+\bibitem{MCloskeyMurray1997} R.\,T.~M'Closkey, R.\,M.~Murray,
+  \emph{Exponential stabilization of driftless nonlinear control systems using
+  homogeneous feedback}, IEEE Trans.\ Automat.\ Control \textbf{42} (1997), 614--628.
+\bibitem{Polyakov2020} A.~Polyakov,
+  \emph{Generalized Homogeneity in Systems and Control}, Comm.\ Control Engrg., Springer, 2020,
+  doi:10.1007/978-3-030-38449-4.
+\bibitem{Astolfi1998} A.~Astolfi,
+  \emph{Discontinuous control of the Brockett integrator},
+  European J.\ Control \textbf{4} (1998), 49--63.
+\bibitem{CanudasSordalen1992} C.~Canudas de Wit, O.\,J.~S\o rdalen,
+  \emph{Exponential stabilization of mobile robots with nonholonomic constraints},
+  IEEE Trans.\ Automat.\ Control \textbf{37} (1992), 1791--1797.
+\bibitem{BlochDrakunov1994} A.\,M.~Bloch, S.~Drakunov,
+  \emph{Stabilization of a nonholonomic system via sliding modes},
+  Proc.\ 33rd IEEE CDC, 1994, 2961--2963.
+\bibitem{Zeng2019} S.~Zeng,
+  \emph{Iterative optimal control syntheses illustrated on the Brockett integrator},
+  IFAC-PapersOnLine \textbf{52}:16 (2019), 138--143, doi:10.1016/j.ifacol.2019.11.768.
+\bibitem{Zuyev2016} A.~Zuyev,
+  \emph{Exponential stabilization of nonholonomic systems by means of oscillating controls},
+  SIAM J.\ Control Optim.\ \textbf{54} (2016), 1678--1696.
+\bibitem{ZuyevGrushkovskaya2025} A.~Zuyev, V.~Grushkovskaya,
+  \emph{On classical solutions in the stabilization problem for nonholonomic control systems with
+  time-varying feedback laws}, 2025 IEEE 64th Conference on Decision and Control (CDC), 7507--7512,
+  doi:10.1109/CDC57313.2025.11312233.
+\bibitem{Coron1992} J.-M.~Coron,
+  \emph{Global asymptotic stabilization for controllable systems without drift},
+  Math.\ Control Signals Systems \textbf{5} (1992), 295--312.
+\bibitem{HamziKangBarbot2004} B.~Hamzi, W.~Kang, J.-P.~Barbot,
+  \emph{Analysis and control of Hopf bifurcations}, SIAM J.\ Control Optim.\ \textbf{42} (2004), 2200--2220,
+  doi:10.1137/S0363012900372714.
+\bibitem{KorobovBebiya2017} V.\,I.~Korobov, M.\,O.~Bebiya,
+  \emph{Stabilization of one class of nonlinear systems} \textup{(Russian)},
+  Avtomat.\ i Telemekh.\ \textbf{2017}:1, 3--18; Engl.\ transl.\ Autom.\ Remote
+  Control \textbf{78} (2017), 1--15.
+\bibitem{Zaslavsky1996} B.~Zaslavsky,
+  \emph{Feedback stabilization of connected nonlinear oscillators with
+  uncontrollable linearization}, Systems Control Lett.\ \textbf{27} (1996), 181--185.
+\bibitem{QianDuLi2016} C.~Qian, H.~Du, S.~Li,
+  \emph{Global stabilization via sampled-data output feedback for a class of linearly uncontrollable and
+  unobservable systems}, IEEE Trans.\ Automat.\ Control \textbf{61} (2016), 4088--4093.
+\bibitem{YuLin2024} X.~Yu, W.~Lin,
+  \emph{A Lyapunov--Krasovskii method for semiglobal stabilization of a class of time-delay nonlinear systems
+  with uncontrollable linearization by linear feedback}, IEEE Trans.\ Automat.\ Control \textbf{69} (2024),
+  4110--4117.
+\end{thebibliography}
+}
+
+\end{document}
