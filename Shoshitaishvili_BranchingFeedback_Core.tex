@@ -45,9 +45,7 @@
 \date{}
 
 \begin{abstract}
-The \emph{qualitative-behaviour control (QBC) problem} is to make the closed loop reproduce a behaviour smoothly equivalent to a given one. At a working point where the linearisation of the plant is uncontrollable, this problem has no smooth solution if the spectrum of the given behaviour does not contain some uncontrollable eigenvalue. We show what can
-be done instead. A plant with state $x$ is coupled to a reference system with state $z$ through the coupling law $u(x,z)$. One looks for a surface $x=F(z)$ that the joint motion of $x$ and $z$ keeps invariant. If the reference does not share an uncontrollable eigenvalue of the plant, uncontrollability forces $F$ to be singular at the working point. Then, in general, some states $x$ near the working point are $F(z)$ for several $z$, and $u\bigl(x,F^{-1}(x)\bigr)$ is a branching feedback. Its branches correspond to adjacent regions of the invariant surface $x=F(z)$, and a switching law defines the change of branch in the passage from one region to another. We introduce the \emph{branching QBC ultrastability problem} \cite{Companion}: the problem of stabilising uniformly every plant of a family that may include plants with controllability deficiencies, some of which have no smooth stabiliser. An example is a failing actuator. As the actuator weakens, the plant changes; when the actuator stops, the plant can lose controllability. So the plants along the way form a family that passes through a plant with a controllability deficiency. The new results are: stabilisation of the model $\dot x=u^{n}$ for every $n\ge2$, and a solution of the branching QBC ultrastability problem for its deformations, as in damping a resonator, and of its robust version, in which one feedback works for the whole family; stabilisation of the nonholonomic (Brockett) integrator in two ways: by a branching feedback and by a continuous time-periodic feedback; and an attracting cycle of \emph{prescribed frequency} when the critical pair $\pm i\omega_0$ is uncontrollable, where no smooth feedback can change $\omega_0$. The construction originates in \cite{Shosh1990}, from which we also recall asymptotic stabilisation and the synthesis of a stable Andronov--Hopf bifurcation at an uncontrollable linearisation. This preprint is a short version; the proofs and further results are in the
-companion preprint \cite{Companion}.
+The \emph{qualitative-behaviour control (QBC) problem} is to make the closed loop reproduce a behaviour smoothly equivalent to a given one. At a working point where the linearisation of the plant is uncontrollable, this problem has no smooth solution if the spectrum of the given behaviour does not contain some uncontrollable eigenvalue. We show what can be done instead. The plant (state $x$) is coupled to a reference system (state $z$) by a coupling law $u(x,z)$, and one looks for a surface $x=F(z)$ that the joint motion keeps invariant. If the reference does not share an uncontrollable eigenvalue of the plant, $F$ is singular at the working point, $F^{-1}(x)$ has several points $z$ for some $x$, and $u\bigl(x,F^{-1}(x)\bigr)$ is a \emph{branching feedback}. Its branches correspond to regions of the surface $x=F(z)$ (most often adjacent), and a switching law defines the change of branch. We consider branching QBC after \cite{Shosh1988,Shosh1990,Shosh1991,Shosh1992} and introduce two new notions: \emph{ultrastability}, the uniform stabilisation of every plant of a family that may include plants with no smooth stabiliser, as when an actuator fails; and \emph{robust ultrastability}, the same with one feedback for the whole family. The new results are: stabilisation of $\dot x=u^{n}$, $n\ge2$; ultrastability and robust ultrastability for $\dot x=u^{n}+xA(x,\bar x,u,\bar u)+\bar xB(x,\bar x,u,\bar u)$ (as in damping of a family of resonators); an ultrastable and robust ultrastable Andronov--Hopf bifurcation as the target behaviour, for a part of this family (as for resonators with damping, detuning and a Duffing term); two stabilisers of the nonholonomic (Brockett) integrator, a branching one and a continuous time-periodic one; and an attracting cycle of \emph{prescribed frequency} at an uncontrollable critical pair $\pm i\omega_0$, where no smooth feedback can change $\omega_0$. The proofs and further results are in the companion preprint \cite{Companion}.
 \end{abstract}
 
 \maketitle\enlargethispage{3pt}
@@ -105,31 +103,13 @@ its subject.
 
 \medskip
 \noindent\textbf{What this paper adds.}
-We follow the method of \cite{Shosh1990}. The plant is coupled to a reference system by a coupling law $u=h(x,z)$
-that depends on the states of both, and one looks for an invariant manifold $x=F(z)$ of the combined system, the
-\emph{coupling manifold}. If an uncontrollable eigenvalue of the linearisation is not an eigenvalue of the reference,
-then for every coupling $F$ is singular at the working point \cite[Cor.~2.7]{Shosh1990}. Over a state $x$ the reference state $z$ with $F(z)=x$ is then in general
-not unique, and the coupling gives one control value on each such $z$: this is the
-\emph{branching feedback}. Its branches are defined on regions of $X$ glued together along strata of the \emph{caustic}, which is the set
-of critical values of $F$, i.e.\ the images of the points where $F$ is not locally invertible, and possibly along some other submanifolds of $X$ chosen by design. The new results are:
+We follow the method of \cite{Shosh1988,Shosh1990,Shosh1991,Shosh1992}. The plant is coupled to a reference system by a coupling law $u=h(x,z)$ that depends on the states of both, and one looks for an invariant manifold $x=F(z)$ of the combined system, the \emph{coupling manifold}. If an uncontrollable eigenvalue of the linearisation is not an eigenvalue of the reference, $F$ is singular at the working point for every coupling \cite[Cor.~2.7]{Shosh1990}. Then the control $u=h(x,F^{-1}(x))$ is in general not unique. It is the \emph{branching feedback}. Its branches are defined on regions of $X$ glued together along the \emph{caustic}, and possibly along other surfaces chosen by design. The caustic is the set of critical values of $F$, i.e.\ the images of the points where the derivative of $F$ is degenerate. The new results are:
 \begin{enumerate}
-\item[(1)] \emph{Stabilisation across a loss of controllability} (\S\ref{sec:stab}): for $\dot x=u^{n}$, every
-  $n\ge2$, an $n$-branch feedback stabilises the origin, the branch changing on a ray chosen by design; for
-  the versal deformation of $u^{n}$ the branch point splits into several branch points, and the same
-  reference and coupling solve the branching QBC problem for the whole family, including plants with controllability deficiencies, which have no continuous stabiliser. A high-Q
-  resonator driven electrostatically, without DC bias, at half or at a quarter of its resonance frequency is a plant
-  of this kind with $n=2$ or $n=4$.
-\item[(2)] \emph{The Brockett integrator} (\S\ref{sec:brockett}): the coupling manifold is a weighted blow-up and the
-  caustic is the $x_3$-axis; the branching feedback is in closed form, its magnitude is proportional to the size
-  $\nu$ of the state, and $\nu$ halves in a time that is the same for every initial point; keeping the horns invariant
-  gives a spiral of prescribed frequency, and rotating the branch gives a continuous time-periodic stabiliser.
-\item[(3)] \emph{Prescribed frequency at an uncontrollable critical pair $\pm i\omega_0$} (\S\ref{sec:frequency});
-  \cite[\S5]{Shosh1990} treats only controllable $(A,C)$. Smooth feedback cannot change $\omega_0$; a branching
-  feedback installs an attracting cycle of prescribed frequency, from a range explicitly decided by the coefficients of
-  the terms of \eqref{eq:plant} quadratic in $u$.
+\item[(1)] \emph{Stabilisation across a loss of controllability} (\S\ref{sec:stab}): for $\dot x=u^{n}$, $n\ge2$, an $n$-branch feedback stabilises the origin, the branch changing on a ray chosen by design. For the versal deformation of $u^{n}$ the branch point splits into several branch points, and the same reference and coupling serve the whole family, including plants with no continuous stabiliser. Example: a high-Q resonator driven without DC bias at half or a quarter of its frequency ($n=2$, or $n=4$ through the parallel-plate gap).
+\item[(2)] \emph{The Brockett integrator} (\S\ref{sec:brockett}): the coupling manifold is a weighted blow-up; the branching feedback is in closed form, proportional to $\nu=((x_1^2+x_2^2)^2+x_3^2)^{1/4}$, and $\nu$ halves in a time that is the same for every initial point; keeping the horns (the paraboloids $x_3=\rho(x_1^2+x_2^2)$) invariant gives a spiral of prescribed frequency, and rotating the branch gives a continuous time-periodic stabiliser.
+\item[(3)] \emph{Prescribed frequency at an uncontrollable pair $\pm i\omega_0$} (\S\ref{sec:frequency}): smooth feedback cannot change $\omega_0$; a branching feedback gives an attracting cycle of prescribed frequency, from a range given by the terms of \eqref{eq:plant} quadratic in $u$ (\cite[\S5]{Shosh1990} treats only controllable $(A,C)$).
 \end{enumerate}
-All attracting cycles synthesised here have nonzero rotation about the origin; the self-intersection of the Hopf
-cycle of \cite{Shosh1990} can be removed with a jump to the other branch at the crossing.
+All attracting cycles synthesised here have nonzero rotation about the origin.
 
 \medskip
 \noindent\textbf{On language.}
@@ -180,19 +160,17 @@ Near $\pi(\Sig)$ uniqueness can fail, since the control $u=h\bigl(x,\zeta(x)\big
 This is avoided in one of two ways \cite[\S2.5]{Companion}. In \emph{branching closed/open-loop control}
 \cite[\S3]{Shosh1990}, near $\pi(\Sig)$ the feedback is replaced by the programmed control $u(t)=h\bigl(F(z(t)),z(t)\bigr)$ along the
 reference trajectory and is resumed on the branch reached; the control stays continuous in time, and each
-solution is the projection of one reference trajectory. When the trajectories of the reference on $M$ cross $\Sig$ transversally, the branch changes only finitely many times on each finite time interval, and a small measurement error cannot flip the branch. In \emph{branching feedback alone}, a small ball around
+solution is the projection of one reference trajectory. When the trajectories of the reference on $M$ cross $\Sig$ transversally, the branch changes only finitely many times on each finite time interval. In \emph{branching feedback alone}, a small ball around
 each point of $\Sig$ where branches collide is cut out of $M$, and $M$ stays a branched covering after
 this surgery; on the boundary of each ball the state is switched to a branch over the same $x$ that does not take
 part in the collision; this assumes that such a branch exists (for $F(z)=z^{2}$ both sheets collide, and the
 closed/open-loop variant is used).
 
-The branch number in the state makes the law insensitive to small errors in measuring the state \cite{Shosh1990,Sontag1999}:
-the branch is not re-decided from the measured state at each instant, but changes only near the points of $\Sig$
-where branches collide. In this the branching feedback is close to hybrid controllers
-\cite{GoebelSanfeliceTeel2012,Sanfelice2021} and to a switch with hysteresis \cite{KrasnoselskiiPokrovskii1989,Visintin2014}. The simplest instance of branching: for $x=z^{3}-z$ three
+The controller remembers which branch it is on: the branch number is part of the controller's state, and the switching law, which changes it, is part of the controller's dynamics \cite{Shosh1990,Sontag1999}. In this, branching feedback is reminiscent of hybrid controllers
+\cite{GoebelSanfeliceTeel2012,Sanfelice2021} and of a switch with hysteresis \cite{KrasnoselskiiPokrovskii1989,Visintin2014}. The simplest instance of branching: for $x=z^{3}-z$ three
 branches coexist over the interval $|x|<2/(3\sqrt3)$; a switch uses the two outer ones, and each of them ends at a fold,
 where the switch takes place. In engineering practice a thermostat or a
-relay has two branches, an automatic gearbox with $p$ gears has $p$ branches, since at the same speed it may be in either of two gears, depending on the gear it was in before, and staged heaters or compressors have one branch per stage. In all these cases memory prevents chattering.
+relay has two branches, an automatic gearbox with $p$ gears has $p$ branches, since at the same speed it may be in either of two gears, depending on the gear it was in before, and staged heaters or compressors have one branch per stage.
 
 \section{Stabilisation}\label{sec:stab}
 
@@ -248,10 +226,9 @@ and coupling thus serve the whole family, including its plants with controllabil
 $|z_0|\le(n|\lambda||x(0)|)^{1/n}$ and $|z(t)|\le|z_0|$;
 from another lift the trajectory still tends to $0$ but may first move away. Deformations that contain $x$ are treated in \cite[\S3.4]{Companion}.
 
-\looseness=-1 \emph{An example: damping a resonator.} A high-Q resonator of natural frequency $\omega_0$, driven electrostatically
-without DC bias at $\omega_0/n$ \cite{MalufWilliams2004,KassieLeviElata2020}, has, along with the measured signal, a
-noise: its own oscillation at $\omega_0$. The slowly varying complex amplitude $a$ of this oscillation obeys
-$\dot a\approx-\gamma a+\kappa u^{n}$, where $\gamma>0$ is its weak natural damping and $\kappa$ a constant. To kill this noise quickly (a tenfold fall of its amplitude takes about $7000$ periods without control, and $18$ periods for $n=2$ or $17$ to $28$ periods for $n=4$ with it \cite[\S3.4]{Companion}), we use a branching feedback, with $n=2$ or $n=4$. A time shift replaces $u$ by $ue^{i\theta}$ and $a$ by $ae^{in\theta}$, so in the control alone $u^{n}$ is the term of lowest order, and $\bar u^{n}$ and lower powers of $u$ do not occur. One reference and one coupling solve the ultrastability problem for a generic family of deformations, including tones and the Duffing term \cite[\S3.4]{Companion}. For the plants $\dot x=u^{n}+xA(x,\bar x,u,\bar u)+\bar xB(x,\bar x,u,\bar u)$, with $A$ and $B$ convergent power series and $|A|+|B|\le L$ for $|x|\le1$, $|u|\le U$, the feedback $u=\omega^{j}(n\Lambda\lambda_0x)^{1/n}$, where $\operatorname{Re}\lambda_0<0$, $\operatorname{Im}\lambda_0\ne0$ and $\Lambda\min(|\operatorname{Re}\lambda_0|,|\operatorname{Im}\lambda_0|)\ge2L/n$, does not depend on $A$ and $B$, and gives $|x(t)|\le|x_0|e^{n\Lambda\operatorname{Re}\lambda_0t/2}$ for $|x_0|<\min\bigl(1,U^{n}/(n\Lambda|\lambda_0|)\bigr)$; so it solves the ultrastability problem robustly, for all $A$ and $B$ with $|A|+|B|\le L$. A continuous non-Lipschitz feedback can also damp the resonator, thanks to $\gamma$, but for the model $\dot x=\kappa u^{n}$ ($\gamma=0$, no detuning) none exists, while the same reference and coupling still work and give ultrastability. With a reference of Andronov--Hopf type, one feedback, built for all resonators $\dot x=u^{n}+(-\gamma+i\sigma)x+\delta|x|^{2}x$ (damping, detuning and a Duffing term, within given bounds), gives a robust ultrastable Andronov--Hopf bifurcation for each of them \cite[\S3.4]{Companion}.
+\emph{An ultrastable example: damping a family of resonators.} A high-Q resonator of natural frequency $\omega_0$, driven electrostatically without DC bias at $\omega_0/n$ \cite{MalufWilliams2004,KassieLeviElata2020}, has, along with the measured signal, a noise: its own oscillation at $\omega_0$. Its slowly varying complex amplitude $a$ obeys $\dot a\approx-\gamma a+\kappa u^{n}$, with weak natural damping $\gamma>0$. A time shift replaces $u$ by $ue^{i\theta}$ and $a$ by $ae^{in\theta}$, so $u^{n}$ is the lowest-order control term. A branching feedback with $n=2$ or $n=4$ makes the amplitude fall tenfold in $18$ or $17$ to $28$ periods, instead of about $7000$ \cite[\S3.4]{Companion}. One reference and one coupling solve the ultrastability problem for a generic family of deformations, including tones and the Duffing term \cite[\S3.4]{Companion}.
+
+\emph{A robust ultrastable example: another family of resonators.} Let $\dot x=u^{n}+xA+\bar xB$, with $A,B$ convergent power series in $x,\bar x,u,\bar u$ and $|A|+|B|\le L$ for $|x|\le1$, $|u|\le U$. Compared with the family above, these plants have no tones and no lower powers of $u$, while $A$ and $B$ are any series within this bound. Take $\operatorname{Re}\lambda_0<0$, $\operatorname{Im}\lambda_0\ne0$ and $\Lambda\min(|\operatorname{Re}\lambda_0|,|\operatorname{Im}\lambda_0|)\ge2L/n$. Then the feedback $u=\omega^{j}(n\Lambda\lambda_0x)^{1/n}$ does not depend on $A$ and $B$, and gives $|x(t)|\le|x_0|e^{n\Lambda\operatorname{Re}\lambda_0t/2}$ for $|x_0|<\min\bigl(1,U^{n}/(n\Lambda|\lambda_0|)\bigr)$. So it solves the ultrastability problem robustly, for all $A$ and $B$ with $|A|+|B|\le L$. For $\dot x=\kappa u^{n}$ ($\gamma=0$, no detuning) no continuous stabiliser exists \cite[\S3.2]{Companion}, while the same reference, with the coupling multiplied by $\kappa^{-1/n}$, still works. With a reference of Andronov--Hopf type, one feedback, built for all resonators $\dot x=u^{n}+(-\gamma+i\sigma)x+\delta|x|^{2}x$ (damping, detuning and a Duffing term, within given bounds), gives a robust ultrastable Andronov--Hopf bifurcation for each of them \cite[\S3.4]{Companion}.
 
 \section{The Brockett integrator}\label{sec:brockett}
 
@@ -397,24 +374,24 @@ the branching feedback $u(x,j)=Lx_>+p_j(x)$ makes $x_<$ obey
 \[
   \dot x_<=\bigl[2(\varepsilon-|x_<|)+2i\omega\bigr]x_< ,
 \]
-($-2i\omega$ for $x_<=\bar z^{2}$), so $x_<$ traverses the asymptotically stable circle $|x_<|=\varepsilon$ at angular velocity $2\omega$, with period
+($-2i\omega$ for $x_<=\bar z^{2}$), so $x_<$ traverses the asymptotically stable circle $|x_<|=\varepsilon$ at angular velocity $2\omega$ ($-2\omega$ for $x_<=\bar z^{2}$), with period
 $\pi/\omega$; the control, $x_>$ and the reference have period $2\pi/\omega$.
 \end{theorem}
 
-The realised control $u(t)$ is smooth in time.
+The realised control $u(t)$ is continuous in time and as regular as the branches.
 
 On and outside the ellipse $J$ vanishes on some line through $0$, so $Q$ has critical points off $0$:
 folds in general, degenerate ones in special cases (for $G=K=1$, $H=2$, $Q(u)=4(\mathrm{Re}\,u)^{2}$ and $J\equiv0$). There the coupling $u=Lx_>+bz+b'\bar z+(cz+c'\bar z)x_<$ is used
 \cite[\S5.4--\S5.5]{Companion}; its last term, $(cz+c'\bar z)x_<$, acts as friction. A linear coupling alone need not produce an invariant graph through the reference cycle: Appendix~C.1 of
 \cite{Companion} exhibits an undamped quadratic example for which no continuous invariant graph extends over the cycle.
 The departure from the periodic solution is exponentially small in $1/\varepsilon$. The friction term supplies controllable damping. With the friction term, every frequency that passes an explicit
-second-order test is realised. Write $\Pi=|H^{2}-4GK|$ and
+second-order test is realised, except at a few resonances. Write $\Pi=|H^{2}-4GK|$ and
 \[
   U=\frac12\sqrt{\frac{|H|^{2}+3\,\Pi-2\bigl(|G|^{2}+|K|^{2}\bigr)}{|H|^{2}+\Pi-2\bigl(|G|^{2}+|K|^{2}\bigr)}} .
 \]
 
 \begin{corollary}[{\cite[\S5.5]{Companion}}]
-Let $\omega_0>0$ and $|G|\ne|K|$. The angular velocity $2\omega$ or $-2\omega$ of $x_<$ (rotation $+2$ or $-2$ of the cycle about the origin)
+Let $\omega_0>0$ and $|G|\ne|K|$. The angular velocity $2\omega$ or $-2\omega$ of $x_<$ (rotation $+2$ or $-2$ of the cycle about the origin per period $2\pi/\omega$)
 is realised on an attracting cycle as follows.
 \begin{enumerate}
 \item[(a)] $H$ strictly inside the ellipse: every $\omega>0$ for the cycle of rotation $-2$, and every $\omega$ with

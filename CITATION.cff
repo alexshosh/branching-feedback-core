@@ -5,7 +5,7 @@ authors:
   - family-names: "Shoshitaishvili"
     given-names: "Alex"
     affiliation: "Independent Researcher"
-date-released: 2026-11-13
+date-released: 2026-11-14
 license: CC-BY-4.0
 type: article
 repository-code: "https://github.com/alexshosh/branching-feedback-core"
@@ -19,3 +19,5 @@ keywords:
   - Andronov-Hopf bifurcation
   - prescribed frequency
   - nonsmooth stabilisation
+  - ultrastability
+  - robust ultrastability
