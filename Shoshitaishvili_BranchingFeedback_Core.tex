@@ -105,9 +105,9 @@ its subject.
 \noindent\textbf{What this paper adds.}
 We follow the method of \cite{Shosh1988,Shosh1990,Shosh1991,Shosh1992}. The plant is coupled to a reference system by a coupling law $u=h(x,z)$ that depends on the states of both, and one looks for an invariant manifold $x=F(z)$ of the combined system, the \emph{coupling manifold}. If an uncontrollable eigenvalue of the linearisation is not an eigenvalue of the reference, $F$ is singular at the working point for every coupling \cite[Cor.~2.7]{Shosh1990}. Then the control $u=h(x,F^{-1}(x))$ is in general not unique. It is the \emph{branching feedback}. Its branches are defined on regions of $X$ glued together along the \emph{caustic}, and possibly along other surfaces chosen by design. The caustic is the set of critical values of $F$, i.e.\ the images of the points where the derivative of $F$ is degenerate. The new results are:
 \begin{enumerate}
-\item[(1)] \emph{Stabilisation across a loss of controllability} (\S\ref{sec:stab}): for $\dot x=u^{n}$, $n\ge2$, an $n$-branch feedback stabilises the origin, the branch changing on a ray chosen by design. For the versal deformation of $u^{n}$ the branch point splits into several branch points, and the same reference and coupling serve the whole family, including plants with no continuous stabiliser. Example: a high-Q resonator driven without DC bias at half or a quarter of its frequency ($n=2$, or $n=4$ through the parallel-plate gap).
+\item[(1)] \emph{Stabilisation across a loss of controllability, in ultrastable and robust ultrastable ways} (\S\ref{sec:stab}): for $\dot x=u^{n}$, $n\ge2$, an $n$-branch feedback stabilises the origin, the branch changing on a ray chosen by design. For the versal deformation of $u^{n}$ the branch point splits into several branch points, and the whole family, including plants with no continuous stabiliser, is stabilised in an ultrastable way (as in a high-Q resonator driven without DC bias at half or a quarter of its frequency, $n=2$ or $n=4$). The resonators $\dot x=u^{n}+xA(x,\bar x,u,\bar u)+\bar xB(x,\bar x,u,\bar u)$ are stabilised in both ways, ultrastable and robust ultrastable; the robust feedback does not depend on $A$ and $B$. With a reference of Andronov--Hopf type we obtain an ultrastable and robust ultrastable Andronov--Hopf bifurcation for the resonators with $B=0$ and $A$ depending only on $x$ and $\bar x$ (this covers resonators with damping, detuning and a Duffing term, each of which may be zero).
 \item[(2)] \emph{The Brockett integrator} (\S\ref{sec:brockett}): the coupling manifold is a weighted blow-up; the branching feedback is in closed form, proportional to $\nu=((x_1^2+x_2^2)^2+x_3^2)^{1/4}$, and $\nu$ halves in a time that is the same for every initial point; keeping the horns (the paraboloids $x_3=\rho(x_1^2+x_2^2)$) invariant gives a spiral of prescribed frequency, and rotating the branch gives a continuous time-periodic stabiliser.
-\item[(3)] \emph{Prescribed frequency at an uncontrollable pair $\pm i\omega_0$} (\S\ref{sec:frequency}): smooth feedback cannot change $\omega_0$; a branching feedback gives an attracting cycle of prescribed frequency, from a range given by the terms of \eqref{eq:plant} quadratic in $u$ (\cite[\S5]{Shosh1990} treats only controllable $(A,C)$).
+\item[(3)] \emph{Prescribed frequency at an uncontrollable pair $\pm i\omega_0$} (\S\ref{sec:frequency}): a branching feedback gives an attracting cycle of prescribed frequency (which regular feedback cannot do), from a range given by the terms of \eqref{eq:plant} quadratic in $u$ (in \cite[\S5]{Shosh1990} the same synthesis is done through a reference and a coupling, but for a controllable linearisation and, hence, with a regular, differentiable feedback). Ultrastable and robust ultrastable cases also can be considered.
 \end{enumerate}
 All attracting cycles synthesised here have nonzero rotation about the origin.
 
@@ -117,7 +117,7 @@ In comparison with \cite{Shosh1990} we have dropped the original ``Ashby''
 terminology, which never found readers and collides with unrelated usages; the
 objects are renamed in the vocabulary of geometric control. However, the name of Ashby hinted at a connection
 between the stabilisation of equilibria by branching feedback and the notion of ultrastability, which Ashby
-developed for the brain, in the framework of cybernetics \cite{Ashby1960}, and which we use in our different context. Our approach to equivalence of systems, which originated in singularity theory and Ashby's ideas, is reminiscent of an approach that originated in symbolic dynamics: finite equivalence by W.~Parry \cite{Parry1977}.
+developed for the brain, in the framework of cybernetics \cite{Ashby1960}, and which we use in our different context. It and robust ultrastability are defined in \cite[\S3.3]{Companion} through uniform bounds on the coupling data. Our approach to equivalence of systems, which originated in singularity theory and Ashby's ideas, is reminiscent of an approach that originated in symbolic dynamics: finite equivalence by W.~Parry \cite{Parry1977}.
 
 \medskip
 \noindent\textbf{The two preprints.} The companion preprint \cite{Companion} contains all proofs, the details of the
@@ -174,7 +174,7 @@ relay has two branches, an automatic gearbox with $p$ gears has $p$ branches, si
 
 \section{Stabilisation}\label{sec:stab}
 
-\emph{A corank-one degeneracy.} Let $x\in\R^{2}$, $u$ scalar, and let the linearisation have corank one, with positive uncontrollable eigenvalue. By a
+\emph{A corank-one degeneracy.} Let $x\in\R^{2}$, $u$ scalar, and let the linearisation have corank one (the controllable subspace has dimension one less than the state space, so exactly one direction is uncontrollable), with positive uncontrollable eigenvalue. By a
 linear change of variables and a feedback substitution the plant takes the normal form \cite[\S4.2]{Shosh1990}
 \begin{equation}\label{eq:normalform}
   \dot x_1 = a x_1 + b_{20}x_2^{2} + b_{11}x_2u + b_{02}u^{2} + b_3(x_1,x_2,u),\qquad \dot x_2 = u,
@@ -405,6 +405,8 @@ is realised on an attracting cycle as follows.
 
 The case $|G|=|K|$, where the ellipse degenerates to a segment, is treated separately in \cite[\S5.2]{Companion}.
 
+Frequency control can also be considered in ultrastable and robust ultrastable versions, following the same proof, with the coefficients of order ${\ge}3$ as parameters.
+
 \section{Relation to other work}\label{sec:relation}
 
 \emph{Optimal control.} The construction parallels optimal control. There the state is doubled by the adjoint
@@ -607,7 +609,7 @@ impose other behaviour, such as a cycle of chosen frequency.
 \bibitem{Zaslavsky1996} B.~Zaslavsky,
   \emph{Feedback stabilization of connected nonlinear oscillators with
   uncontrollable linearization}, Systems Control Lett.\ \textbf{27} (1996), 181--185.
-\bibitem{QianDuLi2016} C.~Qian, H.~Du, S.~Li,
+\enlargethispage{2\baselineskip}\bibitem{QianDuLi2016} C.~Qian, H.~Du, S.~Li,
   \emph{Global stabilization via sampled-data output feedback for a class of linearly uncontrollable and
   unobservable systems}, IEEE Trans.\ Automat.\ Control \textbf{61} (2016), 4088--4093.
 \bibitem{YuLin2024} X.~Yu, W.~Lin,
